@@ -222,7 +222,7 @@ if __name__ == '__main__':
         val_sets = map(lambda x: transform_single(x,args.version), list(val_dict.items()))
         val_sets = list(filter(lambda x: x is not None, val_sets))
         val_sets = {"data": val_sets}
-        with open("lll_data/%s_to_squad-dev-v%s.json"%(v,task),"w") as f:
+        with open("lll_data/%s_to_squad-dev-v%s.json"%(task,v),"w") as f:
             json.dump(val_sets,f)
-        with open("lll_data/%s_to_squad-train-v%s.json"%(v,task),"w") as f:
+        with open("lll_data/%s_to_squad-train-v%s.json"%(task,v),"w") as f:
             json.dump(train_sets,f)
