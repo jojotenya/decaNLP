@@ -204,7 +204,6 @@ def get_data(args):
 if __name__ == '__main__':
     tasks = ["squad", "iwslt.en.de", "cnn_dailymail", "multinli.in.out", "sst", "srl", "zre", "woz.en", "wikisql", "schema"]
     tasks = ["iwslt.en.de", "cnn_dailymail", "multinli.in.out", "sst", "srl", "zre", "woz.en", "wikisql", "schema"]
-    tasks = ["schema"]
     args = arguments.parse()
     for task in tasks:
         train_dict = {}
