@@ -11,6 +11,7 @@ from dateutil import tz
 
 def get_commit():
     directory = os.path.dirname(sys.argv[0])
+    directory = os.path.dirname(__file__)
     return subprocess.Popen("cd {} && git log | head -n 1".format(directory), shell=True, stdout=subprocess.PIPE).stdout.read().split()[1].decode()
 
 
@@ -25,7 +26,7 @@ def parse():
     Returns the arguments from the command line.
     """
     parser = ArgumentParser()
-    parser.add_argument('--root', default='/decaNLP', type=str, help='root directory for data, results, embeddings, code, etc.')
+    parser.add_argument('--root', default='/data/projects/decaNLP', type=str, help='root directory for data, results, embeddings, code, etc.')
     parser.add_argument('--data', default='.data/', type=str, help='where to load data from.')
     parser.add_argument('--save', default='results', type=str, help='where to save results.')
     parser.add_argument('--embeddings', default='.embeddings', type=str, help='where to save embeddings.')
@@ -87,6 +88,7 @@ def parse():
     parser.add_argument('--exist_ok', action='store_true', help='Ok if the save directory already exists, i.e. overwrite is ok') 
     parser.add_argument('--token_testing', action='store_true', help='if true, sorts all iterators') 
     parser.add_argument('--reverse', action='store_true', help='if token_testing and true, sorts all iterators in reverse') 
+    parser.add_argument('--version', type=int, required=True, help='version of squad-like corpus') 
 
     args = parser.parse_args()
     if args.model is None:
@@ -123,6 +125,7 @@ def parse():
     train_out = f'{",".join(args.train_tasks)}'
     if len(args.train_tasks) > 1:
         train_out += f'{"-".join([str(x) for x in args.train_iterations])}'
+
     args.log_dir = os.path.join(args.save, args.timestamp,
         f'{train_out}{(",val=" + ",".join(args.val_tasks)) if args.val_tasks != args.train_tasks else ""},{args.model},' \
         f'{args.world_size}g',
